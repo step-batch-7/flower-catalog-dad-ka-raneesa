@@ -1,0 +1,6 @@
+--done-- * Take all the pics(data) and files which are needed to the repository.
+--done-- * Create public folder.
+--done-- * Create a file homePage.html,homePage.css.
+--done-- * Create a static html page of home page.
+
+* Create a server and connect the app to that server.
