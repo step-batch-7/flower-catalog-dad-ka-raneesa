@@ -2,21 +2,23 @@ const fs = require('fs');
 const Response = require('./lib/response');
 const CONTENT_TYPES = require('./lib/mimeTypes');
 const { loadTemplate } = require('./lib/viewTemplate');
+const SYMBOLS = require('./lib/symbols');
 const STATIC_FOLDER = `${__dirname}/public`;
 
-const checkFileExist = function(filePath) {
-  let comments = [];
-  if (fs.existsSync(filePath)) comments = JSON.parse(fs.readFileSync(filePath));
-  return comments;
-}
+const loadComments = function() {
+  const COMMENTS_PATH = './data/comments.json';
+  if (fs.existsSync(COMMENTS_PATH)) {
+    return JSON.parse(fs.readFileSync(COMMENTS_PATH));
+  }
+  return [];
+};
 
 const generateComments = () => {
-  const dataFilePath = `${STATIC_FOLDER}/data/comments.json`;
-  const comments = checkFileExist(dataFilePath);
+  const comments = loadComments();
   const generateComment = function(commentsHtml, comment) {
-    const html = `<tbody><td>${comment.date}</td>
-      <td>${comment.name}</td>
-      <td>${comment.comment}</td></tbody>`;
+    const html = `<tbody><td> ${comment.date}</td>
+      <td> ${comment.name}</td>
+      <td> ${comment.comment}</td></tbody>`;
     return html + commentsHtml;
   };
   const html = comments.reduce(generateComment, '');
@@ -34,14 +36,20 @@ const serveGuestBookPage = function() {
   return res;
 }
 
+const replaceUnknownChars = function(text, character) {
+  const regEx = new RegExp(`${character}`, 'g');
+  return text.replace(regEx, SYMBOLS[character]);
+};
+
 const saveCommentAndRedirect = function(req) {
-  const dataFilePath = `${STATIC_FOLDER}/data/comments.json`
-  const comments = checkFileExist(dataFilePath);
+  const comments = loadComments();
   const date = new Date().toGMTString();
   const { name, comment } = req.body;
-  comments.push({ date, name, comment });
-  if (!fs.existsSync(`${STATIC_FOLDER}/data`)) fs.mkdirSync(`${STATIC_FOLDER}/data`);
-  fs.writeFileSync(dataFilePath, JSON.stringify(comments), 'utf8');
+  const keys = Object.keys(SYMBOLS);
+  const [nameText, commentText] = [name, comment].map(text => keys.reduce(replaceUnknownChars, text));
+  comments.push({ date, name: nameText, comment: commentText });
+  if (!fs.existsSync('./data')) fs.mkdirSync('./data');
+  fs.writeFileSync('./data/comments.json', JSON.stringify(comments), 'utf8');
   return serveGuestBookPage();
 }
 
