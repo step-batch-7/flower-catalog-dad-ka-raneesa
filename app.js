@@ -3,11 +3,9 @@ const Response = require('./lib/response');
 const CONTENT_TYPES = require('./lib/mimeTypes');
 const STATIC_FOLDER = `${__dirname}/public`;
 
-const serveStaticFile = (req) => {
-  const path = `${STATIC_FOLDER}${req.url}`;
+const serveStaticFile = (req, optionalUrl) => {
+  const path = `${STATIC_FOLDER}${optionalUrl || req.url}`;
   const stat = fs.existsSync(path) && fs.statSync(path);
-  console.log(path);
-  console.log(fs.existsSync(path));
   if (!stat || !stat.isFile()) return new Response();
   const [, extension] = path.match(/.*\.(.*)$/) || [];
   const contentType = CONTENT_TYPES[extension];
@@ -20,11 +18,13 @@ const serveStaticFile = (req) => {
   return res;
 }
 
+const serveHomePage = function(req) {
+  return serveStaticFile(req, '/home.html');
+};
+
 const findHandler = (req) => {
-  if (req.method === 'GET') {
-    if (req.url == '/') req.url = '/home.html';
-    return serveStaticFile;
-  };
+  if (req.method === 'GET' && req.url === '/') return serveHomePage;
+  if (req.method === 'GET') return serveStaticFile;
   return () => new Response();
 }
 const processRequest = (req) => {
