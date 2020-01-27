@@ -40,6 +40,7 @@ const saveCommentAndRedirect = function(req) {
   const date = new Date().toGMTString();
   const { name, comment } = req.body;
   comments.push({ date, name, comment });
+  if (!fs.existsSync(`${STATIC_FOLDER}/data`)) fs.mkdirSync(`${STATIC_FOLDER}/data`);
   fs.writeFileSync(dataFilePath, JSON.stringify(comments), 'utf8');
   return serveGuestBookPage();
 }
