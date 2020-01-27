@@ -12,9 +12,15 @@
     <div id="submit-body">
       <h1 id="comment-header">Leave a comment</h1>
       <form action="saveComment" method="POST">
-        Name: <input type="text" name="name" id="name" /><br />
+        Name: <input type="text" name="name" id="name" required /><br />
         Comment:
-        <textarea name="comment" id="comment" cols="50" rows="4"></textarea
+        <textarea
+          name="comment"
+          id="comment"
+          cols="50"
+          rows="4"
+          required
+        ></textarea
         ><br />
         <input id="submit-button" type="submit" value="Submit" />
       </form>
