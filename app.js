@@ -13,14 +13,16 @@ const loadComments = function() {
   return [];
 };
 
+const generateComment = function(commentsHtml, commentDetails) {
+  const { date, name, comment } = commentDetails;
+  const html = `<tbody><td> ${date}</td>
+    <td> ${name}</td>
+    <td> ${comment.replace(/\n/g, '</br>')}</td></tbody>`;
+  return html + commentsHtml;
+};
+
 const generateComments = () => {
   const comments = loadComments();
-  const generateComment = function(commentsHtml, comment) {
-    const html = `<tbody><td> ${comment.date}</td>
-      <td> ${comment.name}</td>
-      <td> ${comment.comment}</td></tbody>`;
-    return html + commentsHtml;
-  };
   const html = comments.reduce(generateComment, '');
   return html;
 };
