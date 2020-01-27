@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Guest Book</title>
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+  <body id="guest-body">
+    <h1 id="guest-header"><a href="/"> <<</a>Guest Book</h1>
+    <div id="submit-body">
+      <h1 id="comment-header">Leave a comment</h1>
+      <form action="saveComment" method="POST">
+        Name: <input type="text" name="name" id="name" /><br />
+        Comment:
+        <textarea name="comment" id="comment" cols="50" rows="4"></textarea
+        ><br />
+        <input id="submit-button" type="submit" value="Submit" />
+      </form>
+    </div>
+    <div id="comments-body">
+      <table>
+        <thead class="table-columns">
+          <td>DATETIME</td>
+          <td>NAME</td>
+          <td>COMMENTS_LIST</td>
+        </thead>
+        <tbody id="column-values"></tbody>
+      </table>
+    </div>
+  </body>
+</html>
