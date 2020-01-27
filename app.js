@@ -15,9 +15,9 @@ const loadComments = function() {
 
 const generateComment = function(commentsHtml, commentDetails) {
   const { date, name, comment } = commentDetails;
-  const html = `<tbody><td> ${date}</td>
-    <td> ${name}</td>
-    <td> ${comment.replace(/\n/g, '</br>')}</td></tbody>`;
+  const html = `<tbody><td class="date">${date}</td>
+    <td class="name">${name}</td>
+    <td class="comment">${comment.replace(/\n/g, '</br>')}</td></tbody>`;
   return html + commentsHtml;
 };
 

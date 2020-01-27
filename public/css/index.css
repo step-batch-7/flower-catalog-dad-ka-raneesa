@@ -58,3 +58,18 @@ body {
 #comments-body {
   padding: 15px 0px 0px 0px;
 }
+
+.date,
+.name {
+  width: 220px;
+}
+
+.date,
+.name,
+.comment {
+  padding: 10px;
+}
+
+#table {
+  width: 100%;
+}
