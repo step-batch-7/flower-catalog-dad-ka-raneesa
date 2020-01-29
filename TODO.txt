@@ -1,6 +1,122 @@
---done-- * Take all the pics(data) and files which are needed to the repository.
---done-- * Create public folder.
+Tasks:
+--done-- * Create folders public public/js public/css public/images public/docs.
 --done-- * Create a file homePage.html,homePage.css.
 --done-- * Create a static html page of home page.
+--done-- * Add images to public/images folder
+--done-- * Add flowers information docs to public/docs
 
-* Create a server and connect the app to that server.
+==> Home page <==
+  main heading
+    Flower Catalog 
+    --DONE--  * font family default
+    --DONE--  * align center
+    --DONE--  * color orange
+
+Horizontal line below heading 
+    --DONE--  * color black
+
+Flowers Image (fresh-origins.jpg)
+    --DONE--  * align left
+    --DONE--  * border for Image
+
+  Links 
+    link to flower Abeliophyllum
+    link to flower Ageratum
+    --DONE--  * aligned right to Flowers image
+    --DONE--  * on-click take to that specific flower description
+
+    link to guest book
+    --DONE--  * aligned right to Flowers image and below the watering flowers image
+    --DONE--  * on-click take to that guest book page
+
+    watering flowers (animated-flower-image-0021.gif)
+    --DONE--  * aligned at right to Flowers image and below flowers link
+    --DONE--  * on-click hide for a second 
+    
+--done-- * Create a server and connect the app to that server.
+==> Abeliophyllum Page <==
+   main heading
+     Abeliophyllum
+       --DONE-- * font family default
+       --DONE-- * align center
+       --DONE-- * color orange
+
+  link to go to Home Page
+      --DONE--  * color violet
+      --DONE--  * align left of main heading
+      --DONE--  * text "<<"
+  
+  Horizontal line below heading 
+      --DONE--  * color black
+
+  Flower Image (Abeliophyllum.jpg)
+      --DONE--  * align left
+      --DONE--  * border for Image
+  
+  flower description  
+      --DONE--  * align right side of image and center
+
+  link to download as pdf
+      --DONE--  * align right side of image and below description
+
+==> Ageratum Page <==
+   main heading
+     Ageratum
+      --DONE--  * font family default
+      --DONE--  * align center
+      --DONE--  * color orange
+
+  link to go to Home Page
+      --DONE--  * color violet
+      --DONE--  * align left of main heading
+      --DONE--  * text "<<"
+  
+  Horizontal line below heading 
+      --DONE--  * color black
+
+  Flower Image (Ageratum.jpg)
+      --DONE--  * align left
+      --DONE--  * border for Image
+  
+  flower description  
+      --DONE--  * align right side of image and center
+
+  link to download as pdf
+      --DONE--  * align right side of image and below description
+
+==> Guest Book <==
+  main heading
+     Guest Book
+       --DONE-- * font family default
+       --DONE-- * align center
+       --DONE-- * color orange
+  
+  link to go to Home Page
+      --DONE--  * color violet
+      --DONE--  * align left of main heading
+      --DONE--  * text "<<"
+  
+  Horizontal line below heading 
+      --DONE--  * color black
+
+  sideHeading 
+    Leave a comment
+      --DONE--  * bold 
+      --DONE--  * color black
+      --DONE--  * font family default
+
+  Text Box
+    label name
+      --DONE--  * type text
+      --DONE--  * color black
+    label comment 
+      --DONE--  * type textarea
+      --DONE--  * color black
+  
+  submit 
+      --DONE--  * type button 
+      --DONE--  * value submit 
+
+  All Guests comments section 
+      --DONE--  * format date time name commentsList 
+      --DONE--  * latest first
