@@ -24,7 +24,7 @@ const serverBadRequestPage = function(req, res) {
 const loadComments = function() {
   const COMMENTS_PATH = './data/comments.json';
   if (fs.existsSync(COMMENTS_PATH)) {
-    return JSON.parse(fs.readFileSync(COMMENTS_PATH));
+    return JSON.parse(fs.readFileSync(COMMENTS_PATH, 'utf8') || '[]');
   }
   return [];
 };
@@ -81,7 +81,9 @@ const saveCommentAndRedirect = function(req, res) {
     comments.push({ date, name: nameText, comment: commentText });
     if (!fs.existsSync('./data')) fs.mkdirSync('./data');
     fs.writeFileSync('./data/comments.json', JSON.stringify(comments), 'utf8');
-    serveGuestBookPage(req, res);
+    res.statusCode = 301;
+    res.setHeader('Location', './guestBook.html');
+    res.end();
   })
 }
 
