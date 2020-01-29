@@ -1,7 +1,7 @@
 const fs = require('fs');
+const queryString = require('querystring');
 const CONTENT_TYPES = require('./lib/mimeTypes');
 const { loadTemplate } = require('./lib/viewTemplate');
-const SYMBOLS = require('./lib/symbols');
 const STATIC_FOLDER = `${__dirname}/public`;
 
 const serverBadRequestPage = function(req, res) {
@@ -52,21 +52,6 @@ const serveGuestBookPage = function(req, res) {
   res.end(html);
 }
 
-const replaceUnknownChars = function(text, character) {
-  const regEx = new RegExp(`${character}`, 'g');
-  return text.replace(regEx, SYMBOLS[character]);
-};
-
-const pickupParams = (query, keyValue) => {
-  const [key, value] = keyValue.split('=');
-  query[key] = value;
-  return query;
-};
-
-const readParams = function(keyValueTextPairs) {
-  return keyValueTextPairs.split('&').reduce(pickupParams, {})
-};
-
 const saveCommentAndRedirect = function(req, res) {
   let data = '';
   const comments = loadComments();
@@ -75,10 +60,8 @@ const saveCommentAndRedirect = function(req, res) {
     data += chunk;
   });
   req.on('end', () => {
-    const { name, comment } = readParams(data);
-    const keys = Object.keys(SYMBOLS);
-    const [nameText, commentText] = [name, comment].map(text => keys.reduce(replaceUnknownChars, text));
-    comments.push({ date, name: nameText, comment: commentText });
+    const { date, name, comment } = queryString.parse(data);
+    comments.push({ date, name, comment });
     if (!fs.existsSync('./data')) fs.mkdirSync('./data');
     fs.writeFileSync('./data/comments.json', JSON.stringify(comments), 'utf8');
     res.statusCode = 301;
