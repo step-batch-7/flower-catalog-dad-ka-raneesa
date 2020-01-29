@@ -4,6 +4,23 @@ const { loadTemplate } = require('./lib/viewTemplate');
 const SYMBOLS = require('./lib/symbols');
 const STATIC_FOLDER = `${__dirname}/public`;
 
+const serverBadRequestPage = function(req, res) {
+  const html =
+    `<html>
+    <head>
+      <title>Bad Request</title>
+    </head>
+    <body>
+      <p>404 File not found</p>
+    </body>
+    </html>`
+  res.setHeader('Content-Type', CONTENT_TYPES.html);
+  res.setHeader('Content-Length', html.length);
+  res.setHeader = 404;
+  res.end(html);
+
+};
+
 const loadComments = function() {
   const COMMENTS_PATH = './data/comments.json';
   if (fs.existsSync(COMMENTS_PATH)) {
@@ -71,7 +88,7 @@ const saveCommentAndRedirect = function(req, res) {
 const serveStaticFile = (req, res, optionalUrl) => {
   const path = `${STATIC_FOLDER}${optionalUrl || req.url}`;
   const stat = fs.existsSync(path) && fs.statSync(path);
-  if (!stat || !stat.isFile()) return new Response();
+  if (!stat || !stat.isFile()) return serverBadRequestPage(req, res);
   const [, extension] = path.match(/.*\.(.*)$/) || [];
   const contentType = CONTENT_TYPES[extension];
   const content = fs.readFileSync(path);
@@ -90,7 +107,7 @@ const findHandler = (req) => {
   if (req.method === 'POST' && req.url === '/saveComment') return saveCommentAndRedirect;
   if (req.method === 'GET' && req.url === '/guestBook.html') return serveGuestBookPage;
   if (req.method === 'GET') return serveStaticFile;
-  return () => new Response();
+  return () => serverBadRequestPage;
 }
 const processRequest = (req, res) => {
   const handler = findHandler(req);
