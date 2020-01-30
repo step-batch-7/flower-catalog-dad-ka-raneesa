@@ -4,18 +4,27 @@ const CONTENT_TYPES = require('./lib/mimeTypes');
 const { loadTemplate } = require('./lib/viewTemplate');
 const STATIC_FOLDER = `${__dirname}/public`;
 
-const serveStaticFile = (req, res, next) => {
-  const file = req.url == '/' ? '/home.html' : req.url;
+const getUrl = function(url) {
+  return url === '/' ? '/home.html' : url;
+};
+
+const areStatsNotOk = function(stat) {
+  return !stat || !stat.isFile();
+};
+
+const serveStaticFile = function(req, res, next) {
+  const file = getUrl(req.url);
   const path = `${STATIC_FOLDER}${file}`;
   const stat = fs.existsSync(path) && fs.statSync(path);
-  if (!stat || !stat.isFile()) return next();
+  if (areStatsNotOk(stat)) {
+    return next();
+  }
   const [, extension] = path.match(/.*\.(.*)$/) || [];
-  const contentType = CONTENT_TYPES[extension];
   const content = fs.readFileSync(path);
-  res.setHeader('Content-Type', contentType);
+  res.setHeader('Content-Type', CONTENT_TYPES[extension]);
   res.setHeader('Content-Length', content.length);
   res.end(content);
-}
+};
 
 const loadComments = function() {
   const COMMENTS_PATH = './data/comments.json';
@@ -29,7 +38,7 @@ const redirectTo = function(res, url) {
   res.setHeader('Location', url);
   res.statusCode = 301;
   res.end();
-}
+};
 
 const saveCommentAndRedirect = function(req, res) {
   let data = '';
@@ -41,11 +50,13 @@ const saveCommentAndRedirect = function(req, res) {
   req.on('end', () => {
     const { name, comment } = queryString.parse(data);
     comments.push({ date, name, comment });
-    if (!fs.existsSync('./data')) fs.mkdirSync('./data');
+    if (!fs.existsSync('./data')) {
+      fs.mkdirSync('./data');
+    }
     fs.writeFileSync('./data/comments.json', JSON.stringify(comments), 'utf8');
     return redirectTo(res, '/guestBook.html');
-  })
-}
+  });
+};
 
 const generateComment = function(commentsHtml, commentDetails) {
   const { date, name, comment } = commentDetails;
@@ -67,7 +78,7 @@ const serveGuestBookPage = function(req, res) {
   res.setHeader('Content-Type', CONTENT_TYPES.html);
   res.setHeader('Content-Length', html.length);
   res.end(html);
-}
+};
 
 const serveNotFoundPage = function(req, res) {
   const html =
@@ -78,12 +89,12 @@ const serveNotFoundPage = function(req, res) {
     <body>
       <p>404 File not found</p>
     </body>
-    </html>`
+    </html>`;
   res.setHeader('Content-Type', CONTENT_TYPES.html);
   res.setHeader('Content-Length', html.length);
   res.statusCode = 404;
   res.end('Not Found');
-}
+};
 
 const serveBadRequestPage = function(req, res) {
   const html =
@@ -95,7 +106,7 @@ const serveBadRequestPage = function(req, res) {
       <p>400 Your browser sent a request that this server could not understand.
 Bad Request - Inv</p>
     </body>
-    </html>`
+    </html>`;
   res.setHeader('Content-Type', CONTENT_TYPES.html);
   res.setHeader('Content-Length', html.length);
   res.setHeader = 400;
@@ -103,4 +114,10 @@ Bad Request - Inv</p>
 
 };
 
-module.exports = { serveStaticFile, serveGuestBookPage, saveCommentAndRedirect, serveNotFoundPage, serveBadRequestPage };
+module.exports = {
+  serveStaticFile,
+  serveGuestBookPage,
+  saveCommentAndRedirect,
+  serveNotFoundPage,
+  serveBadRequestPage
+};

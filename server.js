@@ -2,6 +2,8 @@ const { Server } = require('http');
 const App = require('./app');
 const handlers = require('./handlers');
 
+const defaultPort = 4000;
+
 const app = new App();
 
 app.get('/guestBook.html', handlers.serveGuestBookPage);
@@ -11,9 +13,13 @@ app.get('', handlers.serveNotFoundPage);
 app.use('', handlers.serveBadRequestPage);
 app.post('', handlers.serveNotFoundPage);
 
-const main = function(port = 4000) {
+const main = function(port = defaultPort) {
   const server = new Server(app.connectionListener.bind(app));
-  server.listen(port, () => console.log('server is listening at ', server.address()));
-}
+  server.listen(port, () => {
+    process.stderr.write('server is listening at ', server.address());
+  });
+};
 
-main(process.argv[2]);
+const [, , port] = process.argv;
+
+main(port);

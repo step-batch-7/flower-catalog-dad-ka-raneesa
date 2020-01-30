@@ -1,8 +1,9 @@
 const matchRoute = function(route, req) {
-  if (route.method)
-    return route.method == req.method && req.url.match(route.path);
+  if (route.method) {
+    return route.method === req.method && req.url.match(route.path);
+  }
   return true;
-}
+};
 
 class App {
   constructor() {
@@ -26,7 +27,7 @@ class App {
     const next = function() {
       const route = matchedRoutes.shift();
       route.handler(req, res, next);
-    }
+    };
     next();
   }
 }

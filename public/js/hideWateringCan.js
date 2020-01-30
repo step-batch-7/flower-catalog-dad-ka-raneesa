@@ -1,5 +1,11 @@
 const hideImage = () => {
+  const seconds = 1000;
   const element = document.getElementById('watering-can');
   element.style['visibility'] = 'hidden';
-  setTimeout(() => (element.style['visibility'] = 'visible'), 1000);
+  setTimeout(() => {
+    element.style['visibility'] = 'visible';
+  }, seconds);
 };
+
+module.exports = { hideImage };
+
