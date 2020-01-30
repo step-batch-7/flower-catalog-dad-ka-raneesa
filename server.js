@@ -16,7 +16,8 @@ app.post('', handlers.serveNotFoundPage);
 const main = function(port = defaultPort) {
   const server = new Server(app.connectionListener.bind(app));
   server.listen(port, () => {
-    process.stderr.write('server is listening at ', server.address());
+    const address = `${server.address().address} ${server.address().port}`;
+    process.stderr.write(`server is listening at ${address}`);
   });
 };
 
