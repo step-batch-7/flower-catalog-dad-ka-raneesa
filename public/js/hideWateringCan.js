@@ -1,3 +1,5 @@
+'use strict';
+
 const hideImage = () => {
   const seconds = 1000;
   const element = document.getElementById('watering-can');
@@ -6,6 +8,3 @@ const hideImage = () => {
     element.style['visibility'] = 'visible';
   }, seconds);
 };
-
-module.exports = { hideImage };
-
