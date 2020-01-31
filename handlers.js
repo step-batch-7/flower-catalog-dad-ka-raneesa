@@ -1,4 +1,5 @@
 const fs = require('fs');
+const App = require('./app');
 const queryString = require('querystring');
 const CONTENT_TYPES = require('./lib/mimeTypes');
 const { loadTemplate } = require('./lib/viewTemplate');
@@ -114,10 +115,13 @@ Bad Request - Inv</p>
 
 };
 
-module.exports = {
-  serveStaticFile,
-  serveGuestBookPage,
-  saveCommentAndRedirect,
-  serveNotFoundPage,
-  serveBadRequestPage
-};
+const app = new App();
+
+app.get('/guestBook.html', serveGuestBookPage);
+app.post('/saveComment', saveCommentAndRedirect);
+app.get('', serveStaticFile);
+app.get('', serveNotFoundPage);
+app.use('', serveBadRequestPage);
+app.post('', serveNotFoundPage);
+
+module.exports = { app };
