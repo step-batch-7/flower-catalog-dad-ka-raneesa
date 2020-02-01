@@ -1,6 +1,8 @@
 'use strict';
 
 const request = require('supertest');
+const sinon = require('sinon');
+const fs = require('fs');
 const { app } = require('../lib/handlers');
 
 describe('GET home page', () => {
@@ -183,11 +185,15 @@ describe('PUT nonExisting method', () => {
 });
 
 describe('POST /saveComment', () => {
-  it('should post on the saveComment url', (done) => {
+  beforeEach(() => sinon.replace(fs, 'writeFileSync', () => { }));
+  afterEach(() => sinon.restore());
+
+  it('should post on the saveComment, redirect to guestBook page', (done) => {
     request(app.connectionListener.bind(app))
       .post('/saveComment')
-      .send('name=Ranbir')
-      .send('comment=hello')
-      .expect(301, done);
+      .send('name=Ranbir&comment=hello')
+      .set('Accept', '*/*')
+      .expect(301)
+      .expect('Location', '/guestBook.html', done);
   });
 });
