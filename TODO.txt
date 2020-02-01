@@ -121,11 +121,13 @@ Flowers Image (fresh-origins.jpg)
       --DONE--  * format date time name commentsList 
       --DONE--  * latest first
 
---DONE-- * Added sinon to replace fs.writeFileSync
+--DONE-- * Add sinon to replace fs.writeFileSync
 
   tests
-      --DONE--  * added tests for home page
-      --DONE--  * added tests for Abeliophyllum page
-      --DONE--  * added tests for Agerantum page
-      --DONE--  * added tests for guestBook page
-      --DONE--  * added tests for POST saveComment page
+      --DONE--  * add tests for home page
+      --DONE--  * add tests for Abeliophyllum page
+      --DONE--  * add tests for Agerantum page
+      --DONE--  * add tests for guestBook page
+      --DONE--  * add tests for POST saveComment page
+
+--DONE-- * add config file
