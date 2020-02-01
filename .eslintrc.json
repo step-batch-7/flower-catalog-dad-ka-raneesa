@@ -87,6 +87,12 @@
         "max-statements": "off",
         "no-unused-vars": "off"
       }
+    },
+    {
+      "files": ["config.js"],
+      "rules": {
+        "no-process-env": "off"
+      }
     }
   ]
 }
