@@ -120,3 +120,12 @@ Flowers Image (fresh-origins.jpg)
   All Guests comments section 
       --DONE--  * format date time name commentsList 
       --DONE--  * latest first
+
+--DONE-- * Added sinon to replace fs.writeFileSync
+
+  tests
+      --DONE--  * added tests for home page
+      --DONE--  * added tests for Abeliophyllum page
+      --DONE--  * added tests for Agerantum page
+      --DONE--  * added tests for guestBook page
+      --DONE--  * added tests for POST saveComment page
