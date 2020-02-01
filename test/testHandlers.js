@@ -55,6 +55,46 @@ describe('GET home page', () => {
   });
 });
 
+describe('GET Abeliophyllum page', () => {
+  it('should get abeliophyllum.html for /abeliophyllum.html', (done) => {
+    request(app.connectionListener.bind(app))
+      .get('/abeliophyllum.html')
+      .set('Accept', '*/*')
+      .expect(200)
+      .expect('Content-Type', 'text/html')
+      .expect('Content-length', '1671')
+      .expect(/Abeliophyllum/, done);
+  });
+
+  it('should get index.css for /css/index.css path', (done) => {
+    request(app.connectionListener.bind(app))
+      .get('/css/index.css')
+      .set('Accept', '*/*')
+      .expect(200)
+      .expect('Content-Type', 'text/css')
+      .expect('Content-length', '993')
+      .expect(/body {/, done);
+  });
+
+  it('Get abeliophyllum for /pictures/pbase-abeliophyllum.jpg path', (done) => {
+    request(app.connectionListener.bind(app))
+      .get('/pictures/pbase-abeliophyllum.jpg')
+      .set('Accept', '*/*')
+      .expect(200)
+      .expect('Content-Type', 'image/jpeg')
+      .expect('Content-length', '87413', done);
+  });
+
+  it('Get Abeliophyllum pdf for /assets/abeliophyllum.pdf', (done) => {
+    request(app.connectionListener.bind(app))
+      .get('/assets/abeliophyllum.pdf')
+      .set('Accept', '*/*')
+      .expect(200)
+      .expect('Content-Type', 'application/pdf')
+      .expect('Content-length', '35864', done);
+  });
+});
+
 describe('GET guestBook page', () => {
   it('Should get guestBook page templates/guestBook.html path', (done) => {
     request(app.connectionListener.bind(app))
