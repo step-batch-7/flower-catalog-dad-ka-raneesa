@@ -146,6 +146,16 @@ describe('GET guestBook page', () => {
       .expect(/NAME/)
       .expect(/COMMENTS_LIST/, done);
   });
+
+  it('should get index.css for /css/index.css path', (done) => {
+    request(app.connectionListener.bind(app))
+      .get('/css/index.css')
+      .set('Accept', '*/*')
+      .expect(200)
+      .expect('Content-Type', 'text/css')
+      .expect('Content-length', '993')
+      .expect(/.header {/, done);
+  });
 });
 
 describe('GET nonExisting Url', () => {
