@@ -95,6 +95,46 @@ describe('GET Abeliophyllum page', () => {
   });
 });
 
+describe('GET Ageratum page', () => {
+  it('should get ageratum.html for /ageratum.html', (done) => {
+    request(app.connectionListener.bind(app))
+      .get('/agerantum.html')
+      .set('Accept', '*/*')
+      .expect(200)
+      .expect('Content-Type', 'text/html')
+      .expect('Content-length', '1427')
+      .expect(/Agerantum/, done);
+  });
+
+  it('should get index.css for /css/index.css path', (done) => {
+    request(app.connectionListener.bind(app))
+      .get('/css/index.css')
+      .set('Accept', '*/*')
+      .expect(200)
+      .expect('Content-Type', 'text/css')
+      .expect('Content-length', '993')
+      .expect(/body {/, done);
+  });
+
+  it('should get agerantum for /pictures/pbase-agerantum.jpg path', (done) => {
+    request(app.connectionListener.bind(app))
+      .get('/pictures/pbase-agerantum.jpg')
+      .set('Accept', '*/*')
+      .expect(200)
+      .expect('Content-Type', 'image/jpeg')
+      .expect('Content-length', '55554', done);
+  });
+
+  it('should get Ageratum pdf for /assets/ageratum.pdf', (done) => {
+    request(app.connectionListener.bind(app))
+      .get('/assets/ageratum.pdf')
+      .set('Accept', '*/*')
+      .expect(200)
+      .expect('Content-Type', 'application/pdf')
+      .expect('Content-length', '140228', done);
+  });
+});
+
 describe('GET guestBook page', () => {
   it('Should get guestBook page templates/guestBook.html path', (done) => {
     request(app.connectionListener.bind(app))
