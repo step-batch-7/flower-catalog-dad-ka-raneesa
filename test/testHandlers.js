@@ -3,8 +3,8 @@
 const request = require('supertest');
 const { app } = require('../lib/handlers');
 
-describe('GET home page', function() {
-  it('Should get home page / path', function(done) {
+describe('GET home page', () => {
+  it('Should get home page / path', (done) => {
     request(app.connectionListener.bind(app))
       .get('/')
       .set('Accept', '*/*')
@@ -16,7 +16,47 @@ describe('GET home page', function() {
       .expect(/guestBook/, done);
   });
 
-  it('Should get guestBook page path', function(done) {
+  it('Should get index.css for css/index.css path', (done) => {
+    request(app.connectionListener.bind(app))
+      .get('/css/index.css')
+      .set('accept', '*/*')
+      .expect(200)
+      .expect('Content-Type', 'text/css')
+      .expect('Content-Length', '993')
+      .expect(/body {/, done);
+  });
+
+  it('should get hideWaterJug.js for /js/hideWateringCan.js path', (done) => {
+    request(app.connectionListener.bind(app))
+      .get('/js/hideWateringCan.js')
+      .set('Accept', '*/*')
+      .expect(200)
+      .expect('Content-Type', 'application/javascript')
+      .expect('Content-length', '250')
+      .expect(/hidden/, done);
+  });
+
+  it('should get freshorigins image for /pictures/freshorigins.jpg', (done) => {
+    request(app.connectionListener.bind(app))
+      .get('/pictures/freshorigins.jpg')
+      .set('Accept', '*/*')
+      .expect(200)
+      .expect('Content-Type', 'image/jpeg')
+      .expect('Content-length', '381314', done);
+  });
+
+  it('should get gif for /pictures/animated-flower-image-0021.gif', (done) => {
+    request(app.connectionListener.bind(app))
+      .get('/pictures/animated-flower-image-0021.gif')
+      .set('Accept', '*/*')
+      .expect(200)
+      .expect('Content-Type', 'image/gif')
+      .expect('Content-length', '65088', done);
+  });
+});
+
+describe('GET guestBook page', () => {
+  it('Should get guestBook page templates/guestBook.html path', (done) => {
     request(app.connectionListener.bind(app))
       .get('/guestBook.html')
       .set('Accept', '*/*')
