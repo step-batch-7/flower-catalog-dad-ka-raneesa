@@ -7,10 +7,10 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "export DATA_STORE=test/resources/comments.json; nyc mocha",
     "linterTest": "eslint *.js lib/*.js test/*.js public/js/*.js",
     "coverage": "nyc npm test",
-    "start": "node server.js",
+    "start": "export DATA_STORE=data/comments.json; node server.js",
     "alltests": "npm run cover && npm run linterTest"
   },
   "repository": {
